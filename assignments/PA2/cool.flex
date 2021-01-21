@@ -1,12 +1,12 @@
-/*
- *  The scanner definition for COOL.
- */
+ /*
+  *  The scanner definition for COOL.
+  */
 
-/*
- *  Stuff enclosed in %{ %} in the first section is copied verbatim to the
- *  output, so headers and global definitions are placed here to be visible
- * to the code in the file.  Don't remove anything that was here initially
- */
+ /*
+  *  Stuff enclosed in %{ %} in the first section is copied verbatim to the
+  *  output, so headers and global definitions are placed here to be visible
+  * to the code in the file.  Don't remove anything that was here initially
+  */
 %{
 #include <cool-parse.h>
 #include <stringtab.h>
@@ -45,11 +45,37 @@ extern YYSTYPE cool_yylval;
 
 %}
 
-/*
- * Define names for regular expressions here.
- */
+ /*
+  * Define names for regular expressions here.
+  */
 
+CLASS           class
+ELSE            else
+FI              fi
+IF              if
+IN              in
+INHERITS        inherits
+LET             let
+LOOP            loop
+POOL            pool
+THEN            then
+WHILE           while
+CASE            case
+ESAC            esac
+OF              of
 DARROW          =>
+NEW             new
+ISVOID          isvoid
+STR_CONST       ".*"
+INT_CONST       [1-9][0-9]*|[0]
+BOOL_CONST      true|false
+TYPEID          [A-Z][a-zA-Z_0-9]*
+OBJECTID        [a-z][a-zA-Z_0-9]*
+ASSIGN          <-
+NOT             not
+LE              [<=]|<=
+ERROR
+LET_STMT        
 
 %%
 
