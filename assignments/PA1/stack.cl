@@ -179,23 +179,21 @@ class Main inherits A2I {
 
    executeStackMachine(inString: String): Object {
       {
-         if (inString = "+") then
+         if (inString = "x") then
          {
-            pushCommand((new PlusCommand).init());
+            (new IO).out_string("Stop!\n");
          }
          else
-            if (inString = "s") then
-               pushCommand((new SwapCommand).init())
+            if (inString = "+") then
+            {
+               pushCommand((new PlusCommand).init());
+            }
             else
-               if (inString = "d") then
-                  printStack()
+               if (inString = "s") then
+                  pushCommand((new SwapCommand).init())
                else
-                  if (inString = "x") then
-                     -- stop
-                     {
-                        (new IO).out_string("stop!\n");
-                        abort();
-                     }
+                  if (inString = "d") then
+                     printStack()
                   else
                      if (inString = "e") then
                         let node: StackNode <- stackTop in {
@@ -216,12 +214,19 @@ class Main inherits A2I {
    };
 
    main() : Object {
-      let inString: String in {
-         while (true) loop
+      let inString: String, flag: Bool <- true in {
+         while (flag) loop
          {
             (new IO).out_string(">");
             inString <- (new IO).in_string();
             executeStackMachine(inString);
+            if (inString = "x") then
+            {
+               flag <- false;
+            }
+            else
+               0
+            fi;
          }
          pool;
       }

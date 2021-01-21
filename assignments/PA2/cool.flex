@@ -67,15 +67,18 @@ DARROW          =>
 NEW             new
 ISVOID          isvoid
 STR_CONST       ".*"
+ASSIGN          <-
+NOT             not
+LE              <=
+
+ /*
 INT_CONST       [1-9][0-9]*|[0]
 BOOL_CONST      true|false
 TYPEID          [A-Z][a-zA-Z_0-9]*
 OBJECTID        [a-z][a-zA-Z_0-9]*
-ASSIGN          <-
-NOT             not
-LE              [<=]|<=
 ERROR
-LET_STMT        
+LET_STMT
+ */
 
 %%
 
@@ -88,11 +91,31 @@ LET_STMT
   *  The multiple-character operators.
   */
 {DARROW}		{ return (DARROW); }
+{LE}        { return (LE); }
 
  /*
   * Keywords are case-insensitive except for the values true and false,
   * which must begin with a lower-case letter.
   */
+{CLASS}     { return (CLASS); }
+{ELSE}      { return (ELSE); }
+{FI}        { return (FI); }
+{IF}        { retrun {IF}; }
+{IN}        { return (IN); }
+{INHERITS}  { return (INHERITS); }
+{LET}       { return (LET); }
+{LOOP}      { return (LOOP); }
+{POOL}      { return (POOL); }
+{THEN}      { return (THEN); }
+{WHILE}     { return (WHILE); }
+{CASE}      { return (CASE); }
+{ESAC}      { return (ESCA); } 
+{OF}        { return (OF); }
+{NEW}       { return (NEW); }
+{ISVOID}    { return (ISVOID); }
+{ASSIGN}    { return {ASSIGN}; }
+{NOT}       { return {NOT}; }
+
 
 
  /*
@@ -101,6 +124,17 @@ LET_STMT
   *  \n \t \b \f, the result is c.
   *
   */
+\n         { curr_lineno++; }
+
+t[Rr][Uu][Ee]| {
+
+  return (BOOL_CONST);
+}
+
+f[Aa][Ll][Ss][Ee] {
+
+  return (BOOL_CONST);
+}
 
 
 %%
